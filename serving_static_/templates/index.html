@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next episode</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .container{
+            margin-top: 12.5%;
+        }
+        h3{
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="btn btn-info" data-toggle="collapse" href="#next_episode_container" aria-expanded="false" aria-controls="next_episode_container" role="button">
+                    Siguiente episodio
+                </h3>                
+            </div>
+            <div id="next_episode_container" class="collapse col-12">
+                <div class=" card card-body">
+                    <form action="/next" method="post">
+                        <div class="form-group">
+                            <label for="inpEpisode"> Episodio actual: </label>
+                            <input class="form-control" id="inpEpisode" type="number" min="0" placeholder="episode number" name="episode" value="{{actual_episode}}">
+                            <label for="inpOption"> Opción actual: </label>
+                            <select class="form-control" id="inpOption" name="option">
+                                <option selected>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                              </select>
+                              <br>
+                            <input type="submit" class="btn form-control" value="Enviar">
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <h3 class="btn btn-info" data-toggle="collapse" href="#add_anime" aria-expanded="false" aria-controls="next_episode_container" role="button">
+                    Añadir anime
+                </h3>                
+            </div>
+            <div id="add_anime" class="collapse col-12">
+                <div class=" card card-body">
+                    <form action="/add" method="post">
+                        <div class="form-group">
+                            <label for="inpEpisode"> agregar link: </label>
+                            <input class="form-control" id="inpEpisode" name="anime_url" type="text" placeholder="anime episode link" placeholder="https://www3.animeflv.net/ver/naruto-shippuden-hd-1">
+                            <br>
+                            <input type="submit" class="btn form-control" value="Enviar">
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
