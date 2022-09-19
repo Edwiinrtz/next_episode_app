@@ -11,7 +11,6 @@ firefox_profile.set_preference('media.autoplay.default',0)
 #chop.add_argument('–-disable-gpu')
 
 adBlock = 'C:/Users/edwin/next_episode/firefox/adblocker_ultimate-3.7.18.xpi'
-autofullscreen = 'C:/Users/edwin/next_episode/firefox/autofullscreen-1.0.0.2.xpi'
 #inicializando driver
 #DRIVER_PATH = 'C:/Users/edwin/next_episode/chrome/chromedriver'
 #driver = webdriver.Firefox(DRIVER_PATH)
@@ -19,7 +18,6 @@ driver = webdriver.Firefox(firefox_profile=firefox_profile)
 
 
 driver.install_addon(adBlock,True)
-driver.install_addon(autofullscreen,True)
 
 driver.maximize_window()
 
