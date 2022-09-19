@@ -11,6 +11,7 @@ firefox_profile.set_preference('media.autoplay.default',0)
 #chop.add_argument('–-disable-gpu')
 
 adBlock = 'C:/Users/edwin/next_episode/firefox/adblocker_ultimate-3.7.18.xpi'
+autofullscreen = 'C:/Users/edwin/next_episode/firefox/autofullscreen-1.0.0.2.xpi'
 #inicializando driver
 #DRIVER_PATH = 'C:/Users/edwin/next_episode/chrome/chromedriver'
 #driver = webdriver.Firefox(DRIVER_PATH)
@@ -18,9 +19,11 @@ driver = webdriver.Firefox(firefox_profile=firefox_profile)
 
 
 driver.install_addon(adBlock,True)
+driver.install_addon(autofullscreen,True)
 
 driver.maximize_window()
 
+driver.fullscreen_window()
 """sleep(5)
 driver.switch_to.window(driver.window_handles[1])
 driver.get('about:preferences#privacy')
@@ -28,10 +31,39 @@ driver.find_element(By.CSS_SELECTOR, '#autoplaySettingsButton').click()
 driver.find_element(By.CSS_SELECTOR, 'menulist').value = 0 """
 #driver.close()
 
-
+player = ''
+paused = False
 #driver.close()
 
+def omitirOpening():
+    global player
+    driver.execute_script(player+".currentTime = "+player+".currentTime + 75")
+
+def volumen(action):
+    global player
+    try:
+        driver.execute_script(player+".volume = "+player+".volume"+action+".1")
+    except:
+        print('valores no permitidos')
+
+def pause():
+    global player
+    driver.execute_script(player+".pause = "+player+".currentTime + 75")
+    
+
+def getting_image(anime):
+    driver.get("https://co.pinterest.com/search/pins/?q="+anime+" anime")
+    sleep(2)
+    try:
+        url_img = driver.find_element(By.CSS_SELECTOR,'img').get_attribute('src')
+    except:
+        url_img = 'https://i.pinimg.com/564x/1a/84/35/1a8435b262f70dc441a52bf15a9c620d.jpg'
+    print(url_img)
+
+    return url_img
+
 def next_episode(base_url,episode,option):
+    global player
     
     driver.switch_to.window(driver.window_handles[0])
     driver.get(base_url+'-'+episode)
@@ -57,18 +89,22 @@ def next_episode(base_url,episode,option):
     if('MEGA' in str(driver.title) or 'OK' in str(driver.title)):
         print('reproducciendo en mega o OK')
         driver.execute_script("document.querySelector('video,.vid-card_img').click();document.querySelector('video,.vid-card_img').requestFullscreen()")
+        player = "document.querySelector('video,.vid-card_img')"
 
     if('mail.ru' in str(driver.title)):
         sleep(5)
         driver.execute_script("document.querySelector('.b-video-controls__inside-play-button').click();document.querySelector('.b-video-controls__inside-play-button').requestFullscreen()")
         sleep(5)
         driver.execute_script("document.querySelector('b-video-html5__skip').click()")
+        player = "document.querySelector('.b-video-controls__inside-play-button')"
 
     if('embedsito' in str(driver.current_url)):
         driver.execute_script("document.querySelector('.loading-container.faplbu').click();document.querySelector('.loading-container.faplbu').requestFullscreen()")
-
+        player = "document.querySelector('.loading-container.faplbu')"
     else:
         driver.execute_script("document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu').play();document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu').requestFullscreen()")
+        player = "document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu')"
+
     #video_player.play()
     #video_player.click()
     """

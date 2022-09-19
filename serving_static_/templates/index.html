@@ -23,6 +23,23 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <form action="/omitirOpening" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="Omitir opening"></form><br>
+            </div>
+            <!--<div class="col-6">
+                <form action="/pause" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="Pausar"></form><br>
+            </div>-->
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form action="/volumen" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" name="action" value="-"></form><br>
+            </div>
+            <div class="col-6">
+                <form action="/volumen" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" name="action" value="+"></form><br>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <h3 class="btn btn-info" data-toggle="collapse" href="#next_episode_container" aria-expanded="false" aria-controls="next_episode_container" role="button">
                     Siguiente episodio
                 </h3>                
@@ -31,7 +48,7 @@
                 <div class=" card card-body">
                     <form action="/next" method="post">
                         <div class="form-group">
-                            <input type="text" style="display:none;" name="id" value="{{id}}">
+                            <input type="text" name="id" style="display:none;" value="{{id}}">
                             <label for="inpEpisode"> Episodio actual: </label>
                             <input class="form-control" id="inpEpisode" type="number" min="0" placeholder="episode number" name="episode" value="{{actual_episode}}">
                             <label for="inpOption"> Opción actual: </label>
@@ -46,7 +63,8 @@
                                 <option>7</option>
                               </select>
                               <br>
-                            <input type="submit" class="btn form-control" value="Enviar">
+                            <input type="submit" class="btn btn-primary form-control" value="Ver Siguiente" name="next_episode"><br>
+                            <input type="submit" class="btn form-control" value="Ver episodio actual" name="actual_episode_btn">
                         </div>
                         
                     </form>
@@ -62,18 +80,18 @@
                 <div id="carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="card animes_card carousel-item active">
-                            <img class="d-block card-img-top" src="https://rtvc-assets-radionica3.s3.amazonaws.com/s3fs-public/2022-02/animes.jpg" alt="Card image cap">
+                            <img class="d-block card-img-top" src="https://i.pinimg.com/564x/1a/84/35/1a8435b262f70dc441a52bf15a9c620d.jpg" alt="Card image cap">
                             <div class=" card card-body">
                                                     
                             </div>
                         </div>
                         {% for value in favorites %}
                             <div class="card animes_card carousel-item">
-                                <img class="d-block card-img-top" src="https://rtvc-assets-radionica3.s3.amazonaws.com/s3fs-public/2022-02/animes.jpg" alt="Card image cap">
+                                <img class="d-block card-img-top" src="{{value['image']}}" alt="Card image cap">
                                 <div class=" card card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">{{value['name']}}</li>
-                                        <li class="list-group-item">Episodio actual: {{value['actual_episode']}}</li>
+                                        <li class="list-group-item">Ultimo episodio visto: {{value['actual_episode']}}</li>
                                         <button><a href="{{value['anime_url']}}">Visitar pagina</a></button>
                                         <form action="/next" method="post">
                                             <div class="form-group">
@@ -85,6 +103,15 @@
                                                   </select>
                                                   <br>
                                                 <input type="submit" class="btn form-control" value="continuar viendo">
+                                            </div>
+                                            
+                                        </form>
+
+                                        <form action="/deleteFavorites" method="post">
+                                            <div class="form-group">
+                                                <input type="text" style="display:none;" name="id" value="{{value['_id']}}">
+                                                <br>
+                                                <input type="submit" class="btn btn-danger form-control" value="Eliminar de la lista">
                                             </div>
                                             
                                         </form>
