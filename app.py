@@ -94,9 +94,8 @@ def next_episode():
         
     if(request.form.get('next_episode')):        
         #print(actual_anime_id)
-        actual_anime = db.favAnimes.find_one({'_id':actual_anime_id})
-
-        actual_episode = str(int(actual_anime['actual_episode'])+1)
+        episode = int(actual_episode) + 1
+        actual_episode = str(episode)
         #print(actual_anime)
         db.favAnimes.find_one_and_update({'_id':actual_anime_id}, {'$set':{'actual_episode':actual_episode}} )
 
