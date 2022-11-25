@@ -11,7 +11,7 @@ import bson
 
 #connecting to database
 client = MongoClient("mongodb+srv://asd:mTDSZLoMkaNeL6DL@nextepisodedb.pthngit.mongodb.net/?retryWrites=true&w=majority")
-db = client['nextEpisodeDB']
+
 
 app = Flask(__name__,
         static_url_path='', 
@@ -21,6 +21,8 @@ base_url = ''
 actual_episode = 0
 option = 0
 actual_anime_id = ''
+db = ''
+actual_user = ''
 
 def insertAnime():
     global actual_episode
@@ -41,8 +43,28 @@ def insertAnime():
     }
     db.favAnimes.insert_one(anime)
 
+
+@app.route("/select_user", methods=['POST'])
+def select_user():
+    global actual_user, db
+
+    actual_user = request.form.get("user")    
+    db = client['nextEpisodeDBHome_'+actual_user]
+
+    return app.redirect(url_for('root'))
+
+
+
+    
+
+
 @app.route("/")
+def user():
+    return render_template("select_user.html")
+
+@app.route("/home")
 def root():
+    global db
     #getting favorites animes
 
     favorites = db.favAnimes.find({})
