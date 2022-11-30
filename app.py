@@ -4,6 +4,8 @@ from pymongo import MongoClient
 import re
 
 import bson
+import os
+
 
 
 
@@ -64,9 +66,11 @@ def user():
 
 @app.route("/home")
 def root():
-    global db
+    global db, actual_user
     #getting favorites animes
 
+    if(actual_user==''):
+        return redirect(url_for('user'))
     favorites = db.favAnimes.find({})
     return render_template('index.html',id=actual_anime_id,actual_episode=actual_episode, favorites=favorites)
 
@@ -148,6 +152,15 @@ def volumen():
 def pause():
     nae.pause()
     return app.redirect(url_for('root'))
+
+
+@app.route('/shutdown',methods=['POST'])
+def shutdown():
+    global actual_user
+    if(actual_user==''):
+        return redirect(url_for('user'))
+    os.system("shutdown now -h")
+    return render_template('shutdown.html')
 
 if __name__ == "__main__":
     app.run(debug=False)

@@ -16,7 +16,11 @@
         .animes_card{
             padding: 20px;
         }
-
+        .shutdown{
+            position: relative;
+            margin-top: 90%;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +157,10 @@
 
         </div>
     </div>
+
+    <form class="form-group shutdown" action="/shutdown" method="post">
+        <input type="submit" class="form-control btn btn-danger" value="Apagar equipo">
+    </form>
     
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
