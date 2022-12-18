@@ -33,9 +33,21 @@ player = ''
 paused = False
 #driver.close()
 
+selected_script = ""
+
 def omitirOpening():
     global player
     driver.execute_script(player+".currentTime = "+player+".currentTime + 75")
+
+
+def forward():
+    global player
+    driver.execute_script(player+".currentTime = "+player+".currentTime + 15")
+
+def backward():
+    global player
+    driver.execute_script(player+".currentTime = "+player+".currentTime - 15")
+
 
 def volumen(action):
     global player
@@ -45,8 +57,17 @@ def volumen(action):
         print('valores no permitidos')
 
 def pause():
-    global player
-    driver.execute_script(player+".pause = "+player+".currentTime + 75")
+    global player,paused
+    if(paused):
+        play()
+        paused = False
+    else:
+        try:
+            driver.execute_script(player+".pause()")
+        except:
+            play()
+
+        paused = True
     
 
 def getting_image(anime):
@@ -60,8 +81,15 @@ def getting_image(anime):
 
     return url_img
 
+
+def play():
+    global selected_script
+    print(selected_script)
+    driver.execute_script(selected_script)
+
+
 def next_episode(base_url,episode,option):
-    global player
+    global player, selected_script
     
     driver.switch_to.window(driver.window_handles[0])
     driver.get(base_url+'-'+episode)
@@ -84,25 +112,35 @@ def next_episode(base_url,episode,option):
 
     print(driver.title)
 
-    if('MEGA' in str(driver.title) or 'OK' in str(driver.title)):
-        print('reproducciendo en mega o OK')
-        driver.execute_script("document.querySelector('video,.vid-card_img').click();document.querySelector('video,.vid-card_img').requestFullscreen()")
+    if('MEGA' in str(driver.title)):
+        print('reproducciendo en mega')
+        selected_script = "document.querySelector('video,.vid-card_img').click();"
+        play()
         player = "document.querySelector('video,.vid-card_img')"
+
+    if('OK' in str(driver.title)):
+        print('OK')
+        selected_script = "document.querySelector('video').play()"
+        driver.execute_script("document.querySelector('video,.vid-card_img').click();")
+        player = "document.querySelector('video')"
 
     if('mail.ru' in str(driver.title)):
         sleep(5)
-        driver.execute_script("document.querySelector('.b-video-controls__inside-play-button').click();document.querySelector('.b-video-controls__inside-play-button').requestFullscreen()")
+        selected_script="document.querySelector('.b-video-controls__inside-play-button').click();"
+        play()
         sleep(5)
         driver.execute_script("document.querySelector('b-video-html5__skip').click()")
         player = "document.querySelector('.b-video-controls__inside-play-button')"
 
     if('embedsito' in str(driver.current_url)):
-        driver.execute_script("document.querySelector('.loading-container.faplbu').click();document.querySelector('.loading-container.faplbu').requestFullscreen()")
+        selected_script = "document.querySelector('.loading-container.faplbu').click();document.querySelector('.loading-container.faplbu').requestFullscreen()"
+        play()
         player = "document.querySelector('.loading-container.faplbu')"
     else:
-        driver.execute_script("document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu').play();document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu').requestFullscreen()")
-        player = "document.querySelector('video,.plyr-container video,.vid-card_img,.loading-container.faplbu')"
-
+        selected_script = "document.querySelector('video').play()"
+        play()
+        player = "document.querySelector('video')"
+    
     #video_player.play()
     #video_player.click()
     """

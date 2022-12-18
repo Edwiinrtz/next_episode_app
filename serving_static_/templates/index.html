@@ -26,8 +26,23 @@
 <body>
     <div class="container">
         <div class="row">
+
             <div class="col-12">
+                <form action="/pause" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="Pausar"></form><br>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <form action="/atrasar" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="- 15 seg"></form><br>
+            </div>
+
+            <div class="col-8">
                 <form action="/omitirOpening" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="Omitir opening"></form><br>
+            </div>
+
+            <div class="col-2">
+                <form action="/adelantar" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="+ 15 seg"></form><br>
             </div>
             <!--<div class="col-6">
                 <form action="/pause" style="width: 100%;" method="post"><input style="width: 100%;" type="submit" class="btn btn-secondary" value="Pausar"></form><br>

@@ -26,6 +26,8 @@ actual_anime_id = ''
 db = ''
 actual_user = ''
 
+paused = False
+
 def insertAnime():
     global actual_episode
     global base_url
@@ -78,7 +80,7 @@ def root():
 def add_anime():
     global actual_episode
     global base_url
-    anime_url = request.form.get('anime_url').split('-')
+    anime_url = request.form.get('anime_url').replace('m.animeflv.net','www3.animeflv.net').split('-')
     actual_episode = anime_url.pop()
     base_url = '-'.join(anime_url)
 
@@ -141,6 +143,16 @@ def next_episode():
 @app.route('/omitirOpening',methods=['POST'])
 def omitirOpening():
     nae.omitirOpening()
+    return app.redirect(url_for('root'))
+
+@app.route('/adelantar',methods=['POST'])
+def adelantar():
+    nae.forward()
+    return app.redirect(url_for('root'))
+
+@app.route('/atrasar',methods=['POST'])
+def atrasar():
+    nae.backward()
     return app.redirect(url_for('root'))
 
 @app.route('/volumen',methods=['POST'])
