@@ -18,3 +18,9 @@ Technologies
 * firefox webdriver
 * Extension: Adblocker Ultimate  3.7.18
 * Mongodb atlas 
+
+
+Running commands
+-----------------
+* Windows: python3 -m flask  run --host=0.0.0.0
+* Linux: flask run --host=0.0.0.0
