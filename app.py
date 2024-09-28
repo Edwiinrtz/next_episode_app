@@ -1,10 +1,12 @@
 from flask import Flask,request, redirect, url_for,render_template
 import next_anime_episode as nae
 from pymongo import MongoClient
+import threading
 import re
-
 import bson
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 
@@ -12,7 +14,7 @@ import os
 
 
 #connecting to database
-client = MongoClient("mongodb+srv://asd:mTDSZLoMkaNeL6DL@nextepisodedb.pthngit.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient(os.getenv('MONGO_URI_NE'))
 
 
 app = Flask(__name__,
@@ -57,9 +59,6 @@ def select_user():
 
     return app.redirect(url_for('root'))
 
-
-
-    
 
 
 @app.route("/")
@@ -132,7 +131,10 @@ def next_episode():
         print(base_url)
         print(actual_episode)
         print(request.form.get('option'))
-        nae.next_episode(base_url,actual_episode,request.form.get('option'))
+        threading.Thread(target=nae.next_episode, args=(base_url,actual_episode,request.form.get('option'))).start()
+        #threading.main_thread(app.redirect(url_for('root')))
+        #app.redirect(url_for('root'))
+
     except BaseException as err:
         print(f"Unexpected {err=}, {type(err)=}")
 
