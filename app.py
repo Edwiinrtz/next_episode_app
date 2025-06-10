@@ -34,11 +34,11 @@ def insertAnime():
     global actual_episode
     global base_url
 
-    anime_name = base_url.split('ver/').pop().replace('-',' ').strip().upper()
-    anime_name = re.sub('TV|HD','',anime_name).strip()
+    anime_name_url = base_url.split('ver/').pop()
+    img = nae.getting_image(anime_name_url)
+    anime_name = re.sub('TV|HD','',anime_name_url).replace('-',' ').upper().strip()
     anime_url = base_url.replace('/ver/','/anime/')
     print(anime_name)
-    img = nae.getting_image(anime_name)
     
     anime = {
          'name': anime_name,

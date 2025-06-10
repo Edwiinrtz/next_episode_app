@@ -54,10 +54,10 @@ def pause():
     
 
 def getting_image(anime):
-    driver.get("https://co.pinterest.com/search/pins/?q="+anime+" anime")
+    driver.get(f"https://www3.animeflv.net/anime/{anime}")
     sleep(2)
     try:
-        url_img = driver.find_element(By.CSS_SELECTOR,'img').get_attribute('src')
+        url_img = driver.find_element(By.CSS_SELECTOR,'.SidebarA img').get_attribute('src')
     except:
         url_img = 'https://i.pinimg.com/564x/1a/84/35/1a8435b262f70dc441a52bf15a9c620d.jpg'
     print(url_img)
