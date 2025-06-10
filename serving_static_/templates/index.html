@@ -72,7 +72,8 @@
                             <input class="form-control" id="inpEpisode" type="number" min="0" placeholder="episode number" name="episode" value="{{actual_episode}}">
                             <label for="inpOption"> Opción actual: </label>
                             <select class="form-control" id="inpOption" name="option">
-                                <option selected>0</option>
+                                <option selected hidden>{{player_option}}</option>
+                                <option>0</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>

@@ -27,7 +27,7 @@ option = 0
 actual_anime_id = ''
 db = ''
 actual_user = ''
-
+last_player_option = 0
 paused = False
 
 def insertAnime():
@@ -73,7 +73,7 @@ def root():
     if(actual_user==''):
         return redirect(url_for('user'))
     favorites = db.favAnimes.find({})
-    return render_template('index.html',id=actual_anime_id,actual_episode=actual_episode, favorites=favorites)
+    return render_template('index.html',id=actual_anime_id,actual_episode=actual_episode, favorites=favorites,player_option = last_player_option)
 
 @app.route("/add",methods=['POST'])
 def add_anime():
@@ -110,6 +110,7 @@ def next_episode():
     global actual_episode
     global base_url
     global actual_anime_id
+    global last_player_option
 
     actual_episode = int(request.form.get('episode'))
 
@@ -125,12 +126,13 @@ def next_episode():
     actual_episode = str(actual_episode)
     db.favAnimes.find_one_and_update({'_id':actual_anime_id}, {'$set':{'actual_episode':actual_episode}} )
 
+    last_player_option = request.form.get('option')
 
     try:
         print(base_url)
         print(actual_episode)
         print(request.form.get('option'))
-        threading.Thread(target=nae.next_episode, args=(base_url,actual_episode,request.form.get('option'))).start()
+        threading.Thread(target=nae.next_episode, args=(base_url,actual_episode,last_player_option)).start()
         #threading.main_thread(app.redirect(url_for('root')))
         #app.redirect(url_for('root'))
 
