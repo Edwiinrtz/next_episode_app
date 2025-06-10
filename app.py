@@ -111,7 +111,7 @@ def next_episode():
     global base_url
     global actual_anime_id
 
-    actual_episode = request.form.get('episode')
+    actual_episode = int(request.form.get('episode'))
 
     if(request.form.get('base_url')):
         base_url = request.form.get('base_url')
@@ -120,11 +120,10 @@ def next_episode():
         actual_anime_id = bson.objectid.ObjectId(request.form.get('id'))
         
     if(request.form.get('next_episode')):        
-        #print(actual_anime_id)
-        episode = int(actual_episode) + 1
-        actual_episode = str(episode)
-        #print(actual_anime)
-        db.favAnimes.find_one_and_update({'_id':actual_anime_id}, {'$set':{'actual_episode':actual_episode}} )
+        actual_episode+=1
+
+    actual_episode = str(actual_episode)
+    db.favAnimes.find_one_and_update({'_id':actual_anime_id}, {'$set':{'actual_episode':actual_episode}} )
 
 
     try:
