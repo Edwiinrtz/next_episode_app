@@ -12,9 +12,10 @@ Animeflv.net is the plataform where it's implemented.
 Technologies
 ------------
 
-* Python 3.10
-* Flask 2.2.2
-* Selenium 4.4.3
+* Python
+* Flask
+* dotenv
+* Selenium
 * firefox webdriver
 * Extension: Adblocker Ultimate  3.7.18
 * Mongodb atlas 
